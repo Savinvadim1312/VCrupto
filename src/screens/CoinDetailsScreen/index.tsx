@@ -92,23 +92,23 @@ const CoinDetailsScreen = () => {
       <View style={styles.row}>
         <View style={styles.valueContainer}>
           <Text style={styles.label}>Current price</Text>
-          <Text style={styles.value}>{coin.currentPrice}</Text>
+          <Text style={styles.value}>{coin.currentPrice.toFixed(3)}</Text>
         </View>
 
         <View style={{flexDirection: 'row'}}>
           <View style={styles.valueContainer}>
             <Text style={styles.label}>1 hour</Text>
-            <PercentageChange value={coin.valueChange24H} />
+            <PercentageChange value={coin.valueChange24H.toFixed(3)} />
           </View>
 
           <View style={styles.valueContainer}>
             <Text style={styles.label}>1 day</Text>
-            <PercentageChange value={coin.valueChange1D} />
+            <PercentageChange value={coin.valueChange1D.toFixed(3)} />
           </View>
 
           <View style={styles.valueContainer}>
             <Text style={styles.label}>7 days</Text>
-            <PercentageChange value={coin.valueChange7D} />
+            <PercentageChange value={coin.valueChange7D.toFixed(3)} />
           </View>
         </View>
       </View>
@@ -119,9 +119,9 @@ const CoinDetailsScreen = () => {
       <View style={styles.row}>
         <Text>Position</Text>
         <Text>
-          {coin.symbol} {portfolioCoin?.amount || 0}
+          {coin.symbol} {portfolioCoin?.amount?.toFixed(3) || 0}
           {' '}
-          (${coin.currentPrice * (portfolioCoin?.amount || 0)})
+          (${coin.currentPrice * (portfolioCoin?.amount?.toFixed(3) || 0)})
         </Text>
       </View>
 
