@@ -1,0 +1,35 @@
+type User @model(mutations: null) {
+  id: ID!
+  email: String!
+  name: String
+  image: String
+  networth: Float!
+
+  portfolioCoins: [PortfolioCoin] @connection(keyName: "byUser", fields: ["id"])
+}
+
+type PortfolioCoin
+@model(mutations: null)
+@key(name: "byUser", fields: ["userId"]){
+  id: ID!
+  amount: Float!
+
+  userId: ID!
+  user: User @connection(fields: ["userId"])
+
+  coinId: ID!
+  coin: Coin @connection(fields: ["coinId"])
+}
+
+type Coin @model(mutations: null) {
+  id: ID!
+  cgId: String!
+  name: String!
+  symbol: String!
+  image: String
+  currentPrice: Float!
+  valueChange24H: Float!
+  valueChange1D: Float!
+  valueChange7D: Float!
+  priceHistoryString: String
+}

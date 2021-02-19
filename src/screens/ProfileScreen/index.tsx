@@ -1,6 +1,8 @@
 import React, { useState } from 'react';
 import {View, Text, Image, Pressable} from 'react-native';
 import styles from './styles';
+import {Auth} from "aws-amplify";
+import {CommonActions, useNavigation} from "@react-navigation/native";
 const image =  require('../../../assets/images/Saly-16.png');
 
 const ProfileScreen = () => {
@@ -12,8 +14,18 @@ const ProfileScreen = () => {
     netWorth: 12312,
   })
 
-  const signOut = () => {
-    console.warn("Sign out");
+  const navigation = useNavigation();
+
+  const signOut = async () => {
+    await Auth.signOut();
+    navigation.dispatch(
+      CommonActions.reset({
+        index: 0,
+        routes: [
+          { name: 'Welcome' },
+        ],
+      })
+    );
   }
 
   return (
