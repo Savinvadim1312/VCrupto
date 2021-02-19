@@ -25,21 +25,82 @@ const portfolioCoins = [{
   symbol: 'ETH',
   amount: 30,
   valueUSD: 30120,
+},{
+  id: '3',
+  name: 'Etherium',
+  image: 'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/1.jpg',
+  symbol: 'ETH',
+  amount: 30,
+  valueUSD: 30120,
+},{
+  id: '3',
+  name: 'Etherium',
+  image: 'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/1.jpg',
+  symbol: 'ETH',
+  amount: 30,
+  valueUSD: 30120,
+},{
+  id: '3',
+  name: 'Etherium',
+  image: 'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/1.jpg',
+  symbol: 'ETH',
+  amount: 30,
+  valueUSD: 30120,
+},{
+  id: '3',
+  name: 'Etherium',
+  image: 'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/1.jpg',
+  symbol: 'ETH',
+  amount: 30,
+  valueUSD: 30120,
+},{
+  id: '3',
+  name: 'Etherium',
+  image: 'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/1.jpg',
+  symbol: 'ETH',
+  amount: 30,
+  valueUSD: 30120,
+},{
+  id: '3',
+  name: 'Etherium',
+  image: 'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/1.jpg',
+  symbol: 'ETH',
+  amount: 30,
+  valueUSD: 30120,
+},{
+  id: '3',
+  name: 'Etherium',
+  image: 'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/1.jpg',
+  symbol: 'ETH',
+  amount: 30,
+  valueUSD: 30120,
+},{
+  id: '3',
+  name: 'Etherium',
+  image: 'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/1.jpg',
+  symbol: 'ETH',
+  amount: 30,
+  valueUSD: 30120,
 }]
 
 const PortfolioScreen = () => {
   return (
     <View style={styles.root}>
-      <Image style={styles.image} source={image} />
-      <View style={styles.balanceContainer}>
-        <Text style={styles.label}>Portfolio balance</Text>
-        <Text style={styles.balance}>$69.420</Text>
-      </View>
-
       <FlatList
         style={{width: '100%'}}
         data={portfolioCoins}
         renderItem={({item}) => <PortfolioCoin portfolioCoin={item} />}
+        showsVerticalScrollIndicator={false}
+        ListHeaderComponentStyle={{alignItems: 'center'}}
+        ListHeaderComponent={() => (
+          <>
+            <Image style={styles.image} source={image} />
+            <View style={styles.balanceContainer}>
+              <Text style={styles.label}>Portfolio balance</Text>
+              <Text style={styles.balance}>$69.420</Text>
+            </View>
+          </>
+        )}
       />
     </View>
   );
