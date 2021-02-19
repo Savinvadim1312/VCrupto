@@ -36,6 +36,12 @@
 					]
 				}
 			]
+		},
+		"vcrypto5fce58ab": {
+			"build": true,
+			"providerPlugin": "awscloudformation",
+			"service": "Lambda",
+			"dependsOn": []
 		}
 	},
 	"api": {
