@@ -10,7 +10,7 @@ export interface PortfolioCoinProps {
     name: string,
     symbol: string,
     valueChange24H: number,
-    valueUSD: number,
+    currentPrice: number,
   }
 }
 
@@ -21,7 +21,7 @@ const PortfolioCoin = (props: PortfolioCoinProps) => {
       name,
       symbol,
       valueChange24H,
-      valueUSD,
+      currentPrice,
     },
   } = props;
 
@@ -37,7 +37,7 @@ const PortfolioCoin = (props: PortfolioCoinProps) => {
         </View>
       </View>
       <View style={{alignItems: 'flex-end'}}>
-        <Text style={styles.value}>${valueUSD}</Text>
+        <Text style={styles.value}>${currentPrice}</Text>
         <PercentageChange value={valueChange24H} />
       </View>
     </Pressable>
