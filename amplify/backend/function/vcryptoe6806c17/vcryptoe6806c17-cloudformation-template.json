@@ -83,7 +83,7 @@
 				"Timeout": "25",
 				"Code": {
 					"S3Bucket": "amplify-vcrypto-dev-132939-deployment",
-					"S3Key": "amplify-builds/vcryptoe6806c17-43765065686355736664-build.zip"
+					"S3Key": "amplify-builds/vcryptoe6806c17-4c46573976354858717a-build.zip"
 				}
 			}
 		},

@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useContext, useEffect, useState} from 'react';
 import {
   View,
   Text,
@@ -7,18 +7,27 @@ import {
   Pressable,
   Alert,
   KeyboardAvoidingView,
-  Platform
+  Platform,
+  ActivityIndicator,
 } from 'react-native';
-import { useRoute } from '@react-navigation/native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import { API, graphqlOperation } from 'aws-amplify';
-import { exchangeCoins } from '../../graphql/mutations';
+import { exchangeCoins } from './mutations';
 const image =  require('../../../assets/images/Saly-31.png');
 import styles from './styles';
+import AppContext from "../../utils/AppContext";
+import {listPortfolioCoins} from "../../graphql/queries";
 
+const USD_COIN_ID = '9b3330ed-4a3e-4a72-8a7c-9747c166a581';
 
 const CoinExchangeScreen = () => {
   const [coinAmount, setCoinAmount] = useState('')
   const [coinUSDValue, setCoinUSDValue] = useState('')
+  const [isLoading, setIsLoading] = useState(false);
+
+  const navigation = useNavigation();
+
+  const { userId } = useContext(AppContext);
 
   const maxUSD = 100000; // TODO fetch from api
 
@@ -48,20 +57,56 @@ const CoinExchangeScreen = () => {
     setCoinAmount((amount / coin?.currentPrice).toString());
   }, [coinUSDValue]);
 
-  const placeOrder = async () => {
+  const getPortfolioCoinId = async (coinId: string) => {
     try {
       const response = await API.graphql(
-        graphqlOperation(
-          exchangeCoins, {
-            coinId: coin.id,
-            isBuy,
-            amount: parseFloat(coinAmount),
-          }
+        graphqlOperation(listPortfolioCoins,
+          { filter: {
+              and: {
+                coinId: { eq: coinId },
+                userId: { eq: userId }
+              }
+            }}
         )
       )
+      if (response.data.listPortfolioCoins.items.length > 0) {
+        return response.data.listPortfolioCoins.items[0].id;
+      } else {
+        return null;
+      }
     } catch (e) {
       console.error(e);
+      return null;
     }
+  }
+
+  const placeOrder = async () => {
+    if (isLoading) {
+      return;
+    }
+    setIsLoading(true);
+    try {
+      const variables = {
+        coinId: coin.id,
+        isBuy,
+        amount: parseFloat(coinAmount),
+        usdPortfolioCoinId: await getPortfolioCoinId(USD_COIN_ID),
+        coinPortfolioCoinId: await getPortfolioCoinId(coin.id),
+      }
+
+      const response = await API.graphql(
+        graphqlOperation(exchangeCoins, variables)
+      )
+      if (response.data.exchangeCoins) {
+        navigation.navigate('Portfolio');
+      } else {
+        Alert.alert('Error', 'There was an error exchanging coins');
+      }
+    } catch (e) {
+      Alert.alert('Error', 'There was an error exchanging coins');
+      console.error(e);
+    }
+    setIsLoading(false);
   }
 
   const onPlaceOrder = async () => {
@@ -119,6 +164,7 @@ const CoinExchangeScreen = () => {
 
       <Pressable style={styles.button} onPress={onPlaceOrder}>
         <Text style={styles.buttonText}>Place Order</Text>
+        {isLoading && <ActivityIndicator color={'white'} />}
       </Pressable>
     </KeyboardAvoidingView>
   );

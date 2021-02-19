@@ -28,7 +28,7 @@ const getCoinAmount = async (coinPortfolioCoinId, userId) => {
     console.log(coinData);
     // TOdo CHECK if it is indeed coin, and belongs to user
     if (coinData && coinData.Item && coinData.Item.amount && coinData.Item.amount.N) {
-        return coinData.Item.amount.N;
+        return parseFloat(coinData.Item.amount.N);
     }
     return 0;
 }
@@ -47,7 +47,7 @@ const getUsdAmount = async (usdPortfolioCoinId, userId) => {
     // coinId: { S: process.env.USD_COIN_ID },
     // userId: { S: userId },
     if (coinData && coinData.Item && coinData.Item.amount && coinData.Item.amount.N) {
-        return coinData.Item.amount.N;
+        return parseFloat(coinData.Item.amount.N);
     }
     return 0;
 }
@@ -70,7 +70,7 @@ const canBuyCoin = (coin, amountToBuy, usdAmount) => {
     console.log(usdAmount)
     console.log(coin.Item.currentPrice.N)
     console.log(amountToBuy)
-    return usdAmount >= coin.Item.currentPrice.N * amountToBuy
+    return usdAmount >= parseFloat(coin.Item.currentPrice.N) * amountToBuy
 }
 
 const canSellCoin = (amountToSell, portfolioAmount) => {
@@ -86,7 +86,7 @@ const buyCoin = async (
   userId) => {
     const date = new Date();
     // decrease USD
-    const newUsdAmount = usdAmount - coin.Item.currentPrice.N * amountToBuy;
+    const newUsdAmount = usdAmount - parseFloat(coin.Item.currentPrice.N) * amountToBuy;
     const params = {
         Item: {
             id: { S: usdPortfolioCoinId },
@@ -127,7 +127,7 @@ const sellCoin = async (
   userId) => {
     const date = new Date();
     // increase USD
-    const newUsdAmount = usdAmount + coin.Item.currentPrice.N * amountToSell;
+    const newUsdAmount = usdAmount + parseFloat(coin.Item.currentPrice.N) * amountToSell;
     const params = {
         Item: {
             id: { S: usdPortfolioCoinId },
