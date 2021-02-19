@@ -10,6 +10,8 @@ import {
   Platform
 } from 'react-native';
 import { useRoute } from '@react-navigation/native';
+import { API, graphqlOperation } from 'aws-amplify';
+import { exchangeCoins } from '../../graphql/mutations';
 const image =  require('../../../assets/images/Saly-31.png');
 import styles from './styles';
 
@@ -18,12 +20,13 @@ const CoinExchangeScreen = () => {
   const [coinAmount, setCoinAmount] = useState('')
   const [coinUSDValue, setCoinUSDValue] = useState('')
 
-  const maxUSD = 100000;
+  const maxUSD = 100000; // TODO fetch from api
 
   const route = useRoute();
 
   const isBuy = route?.params?.isBuy;
-  const coinData = route?.params?.coinData;
+  const coin = route?.params?.coin;
+  const portfolioCoin = route?.params?.portfolioCoin;
 
   useEffect(() => {
     const amount = parseFloat(coinAmount)
@@ -32,7 +35,7 @@ const CoinExchangeScreen = () => {
       setCoinUSDValue("");
       return;
     }
-    setCoinUSDValue((amount * coinData?.currentPrice).toString());
+    setCoinUSDValue((amount * coin?.currentPrice).toString());
   }, [coinAmount]);
 
   useEffect(() => {
@@ -42,18 +45,36 @@ const CoinExchangeScreen = () => {
       setCoinUSDValue("");
       return;
     }
-    setCoinAmount((amount / coinData?.currentPrice).toString());
+    setCoinAmount((amount / coin?.currentPrice).toString());
   }, [coinUSDValue]);
 
-  const onPlaceOrder = () => {
+  const placeOrder = async () => {
+    try {
+      const response = await API.graphql(
+        graphqlOperation(
+          exchangeCoins, {
+            coinId: coin.id,
+            isBuy,
+            amount: parseFloat(coinAmount),
+          }
+        )
+      )
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  const onPlaceOrder = async () => {
     if (isBuy && parseFloat(coinUSDValue) > maxUSD) {
       Alert.alert('Error', `Not enough USD coins. Max: ${maxUSD}`);
       return;
     }
-    if (!isBuy && parseFloat(coinAmount) > coinData.amount) {
-      Alert.alert('Error', `Not enough ${coinData.symbol} coins. Max: ${coinData.amount}`);
+    if (!isBuy && (!portfolioCoin || parseFloat(coinAmount) > portfolioCoin.amount)) {
+      Alert.alert('Error', `Not enough ${coin.symbol} coins. Max: ${coin.amount || 0}`);
       return;
     }
+
+    await placeOrder();
   }
 
   return (
@@ -64,12 +85,12 @@ const CoinExchangeScreen = () => {
     >
       <Text style={styles.title}>
         {isBuy ? 'Buy ' : "Sell "}
-        {coinData?.name}
+        {coin?.name}
       </Text>
       <Text style={styles.subtitle}>
-        1 {coinData?.symbol}
+        1 {coin?.symbol}
         {' = '}
-        ${coinData?.currentPrice}
+        ${coin?.currentPrice}
       </Text>
       <Image style={styles.image} source={image} />
 
@@ -81,7 +102,7 @@ const CoinExchangeScreen = () => {
             value={coinAmount}
             onChangeText={setCoinAmount}
           />
-          <Text>{coinData?.symbol}</Text>
+          <Text>{coin?.symbol}</Text>
         </View>
         <Text style={{fontSize: 30}}>=</Text>
 

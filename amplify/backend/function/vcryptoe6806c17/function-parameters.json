@@ -1,0 +1,13 @@
+{
+  "permissions": {
+    "api": {
+      "vcrypto": [
+        "create",
+        "read",
+        "update",
+        "delete"
+      ]
+    }
+  },
+  "lambdaLayers": []
+}

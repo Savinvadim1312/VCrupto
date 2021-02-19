@@ -2,25 +2,18 @@
 /* eslint-disable */
 //  This file was automatically generated and should not be edited.
 
-export type CreateUserInput = {
-  id?: string | null,
-  email: string,
-  name?: string | null,
-  image?: string | null,
-  networth: number,
-};
-
-export type ModelUserConditionInput = {
+export type ModelUserFilterInput = {
+  id?: ModelIDInput | null,
   email?: ModelStringInput | null,
   name?: ModelStringInput | null,
   image?: ModelStringInput | null,
   networth?: ModelFloatInput | null,
-  and?: Array< ModelUserConditionInput | null > | null,
-  or?: Array< ModelUserConditionInput | null > | null,
-  not?: ModelUserConditionInput | null,
+  and?: Array< ModelUserFilterInput | null > | null,
+  or?: Array< ModelUserFilterInput | null > | null,
+  not?: ModelUserFilterInput | null,
 };
 
-export type ModelStringInput = {
+export type ModelIDInput = {
   ne?: string | null,
   eq?: string | null,
   le?: string | null,
@@ -60,42 +53,7 @@ export type ModelSizeInput = {
   between?: Array< number | null > | null,
 };
 
-export type ModelFloatInput = {
-  ne?: number | null,
-  eq?: number | null,
-  le?: number | null,
-  lt?: number | null,
-  ge?: number | null,
-  gt?: number | null,
-  between?: Array< number | null > | null,
-  attributeExists?: boolean | null,
-  attributeType?: ModelAttributeTypes | null,
-};
-
-export type UpdateUserInput = {
-  id: string,
-  email?: string | null,
-  name?: string | null,
-  image?: string | null,
-  networth?: number | null,
-};
-
-export type DeleteUserInput = {
-  id?: string | null,
-};
-
-export type ModelUserFilterInput = {
-  id?: ModelIDInput | null,
-  email?: ModelStringInput | null,
-  name?: ModelStringInput | null,
-  image?: ModelStringInput | null,
-  networth?: ModelFloatInput | null,
-  and?: Array< ModelUserFilterInput | null > | null,
-  or?: Array< ModelUserFilterInput | null > | null,
-  not?: ModelUserFilterInput | null,
-};
-
-export type ModelIDInput = {
+export type ModelStringInput = {
   ne?: string | null,
   eq?: string | null,
   le?: string | null,
@@ -109,6 +67,18 @@ export type ModelIDInput = {
   attributeExists?: boolean | null,
   attributeType?: ModelAttributeTypes | null,
   size?: ModelSizeInput | null,
+};
+
+export type ModelFloatInput = {
+  ne?: number | null,
+  eq?: number | null,
+  le?: number | null,
+  lt?: number | null,
+  ge?: number | null,
+  gt?: number | null,
+  between?: Array< number | null > | null,
+  attributeExists?: boolean | null,
+  attributeType?: ModelAttributeTypes | null,
 };
 
 export type ModelPortfolioCoinFilterInput = {
@@ -137,97 +107,14 @@ export type ModelCoinFilterInput = {
   not?: ModelCoinFilterInput | null,
 };
 
-export type CreateUserMutationVariables = {
-  input: CreateUserInput,
-  condition?: ModelUserConditionInput | null,
+export type ExchangeCoinsMutationVariables = {
+  coinId: string,
+  isBuy: boolean,
+  amount: number,
 };
 
-export type CreateUserMutation = {
-  createUser:  {
-    __typename: "User",
-    id: string,
-    email: string,
-    name: string | null,
-    image: string | null,
-    networth: number,
-    portfolioCoins:  {
-      __typename: "ModelPortfolioCoinConnection",
-      items:  Array< {
-        __typename: "PortfolioCoin",
-        id: string,
-        amount: number,
-        userId: string,
-        coinId: string,
-        createdAt: string,
-        updatedAt: string,
-      } | null > | null,
-      nextToken: string | null,
-    } | null,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type UpdateUserMutationVariables = {
-  input: UpdateUserInput,
-  condition?: ModelUserConditionInput | null,
-};
-
-export type UpdateUserMutation = {
-  updateUser:  {
-    __typename: "User",
-    id: string,
-    email: string,
-    name: string | null,
-    image: string | null,
-    networth: number,
-    portfolioCoins:  {
-      __typename: "ModelPortfolioCoinConnection",
-      items:  Array< {
-        __typename: "PortfolioCoin",
-        id: string,
-        amount: number,
-        userId: string,
-        coinId: string,
-        createdAt: string,
-        updatedAt: string,
-      } | null > | null,
-      nextToken: string | null,
-    } | null,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type DeleteUserMutationVariables = {
-  input: DeleteUserInput,
-  condition?: ModelUserConditionInput | null,
-};
-
-export type DeleteUserMutation = {
-  deleteUser:  {
-    __typename: "User",
-    id: string,
-    email: string,
-    name: string | null,
-    image: string | null,
-    networth: number,
-    portfolioCoins:  {
-      __typename: "ModelPortfolioCoinConnection",
-      items:  Array< {
-        __typename: "PortfolioCoin",
-        id: string,
-        amount: number,
-        userId: string,
-        coinId: string,
-        createdAt: string,
-        updatedAt: string,
-      } | null > | null,
-      nextToken: string | null,
-    } | null,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
+export type ExchangeCoinsMutation = {
+  exchangeCoins: boolean,
 };
 
 export type GetUserQueryVariables = {
@@ -426,83 +313,5 @@ export type ListCoinsQuery = {
       updatedAt: string,
     } | null > | null,
     nextToken: string | null,
-  } | null,
-};
-
-export type OnCreateUserSubscription = {
-  onCreateUser:  {
-    __typename: "User",
-    id: string,
-    email: string,
-    name: string | null,
-    image: string | null,
-    networth: number,
-    portfolioCoins:  {
-      __typename: "ModelPortfolioCoinConnection",
-      items:  Array< {
-        __typename: "PortfolioCoin",
-        id: string,
-        amount: number,
-        userId: string,
-        coinId: string,
-        createdAt: string,
-        updatedAt: string,
-      } | null > | null,
-      nextToken: string | null,
-    } | null,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnUpdateUserSubscription = {
-  onUpdateUser:  {
-    __typename: "User",
-    id: string,
-    email: string,
-    name: string | null,
-    image: string | null,
-    networth: number,
-    portfolioCoins:  {
-      __typename: "ModelPortfolioCoinConnection",
-      items:  Array< {
-        __typename: "PortfolioCoin",
-        id: string,
-        amount: number,
-        userId: string,
-        coinId: string,
-        createdAt: string,
-        updatedAt: string,
-      } | null > | null,
-      nextToken: string | null,
-    } | null,
-    createdAt: string,
-    updatedAt: string,
-  } | null,
-};
-
-export type OnDeleteUserSubscription = {
-  onDeleteUser:  {
-    __typename: "User",
-    id: string,
-    email: string,
-    name: string | null,
-    image: string | null,
-    networth: number,
-    portfolioCoins:  {
-      __typename: "ModelPortfolioCoinConnection",
-      items:  Array< {
-        __typename: "PortfolioCoin",
-        id: string,
-        amount: number,
-        userId: string,
-        coinId: string,
-        createdAt: string,
-        updatedAt: string,
-      } | null > | null,
-      nextToken: string | null,
-    } | null,
-    createdAt: string,
-    updatedAt: string,
   } | null,
 };

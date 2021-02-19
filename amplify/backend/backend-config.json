@@ -1,43 +1,58 @@
 {
-    "auth": {
-        "vcrypto16d3e4c5": {
-            "service": "Cognito",
-            "providerPlugin": "awscloudformation",
-            "dependsOn": [
-                {
-                    "category": "function",
-                    "resourceName": "vcrypto16d3e4c5PostConfirmation",
-                    "triggerProvider": "Cognito",
-                    "attributes": [
-                        "Arn",
-                        "Name"
-                    ]
-                }
-            ]
-        }
-    },
-    "function": {
-        "vcrypto16d3e4c5PostConfirmation": {
-            "build": true,
-            "providerPlugin": "awscloudformation",
-            "service": "Lambda"
-        }
-    },
-    "api": {
-        "vcrypto": {
-            "service": "AppSync",
-            "providerPlugin": "awscloudformation",
-            "output": {
-                "authConfig": {
-                    "defaultAuthentication": {
-                        "authenticationType": "AMAZON_COGNITO_USER_POOLS",
-                        "userPoolConfig": {
-                            "userPoolId": "authvcrypto16d3e4c5"
-                        }
-                    },
-                    "additionalAuthenticationProviders": []
-                }
-            }
-        }
-    }
+	"auth": {
+		"vcrypto16d3e4c5": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": [
+				{
+					"category": "function",
+					"resourceName": "vcrypto16d3e4c5PostConfirmation",
+					"triggerProvider": "Cognito",
+					"attributes": [
+						"Arn",
+						"Name"
+					]
+				}
+			]
+		}
+	},
+	"function": {
+		"vcrypto16d3e4c5PostConfirmation": {
+			"build": true,
+			"providerPlugin": "awscloudformation",
+			"service": "Lambda"
+		},
+		"vcryptoe6806c17": {
+			"build": true,
+			"providerPlugin": "awscloudformation",
+			"service": "Lambda",
+			"dependsOn": [
+				{
+					"category": "api",
+					"resourceName": "vcrypto",
+					"attributes": [
+						"GraphQLAPIIdOutput",
+						"GraphQLAPIEndpointOutput"
+					]
+				}
+			]
+		}
+	},
+	"api": {
+		"vcrypto": {
+			"service": "AppSync",
+			"providerPlugin": "awscloudformation",
+			"output": {
+				"authConfig": {
+					"defaultAuthentication": {
+						"authenticationType": "AMAZON_COGNITO_USER_POOLS",
+						"userPoolConfig": {
+							"userPoolId": "authvcrypto16d3e4c5"
+						}
+					},
+					"additionalAuthenticationProviders": []
+				}
+			}
+		}
+	}
 }
