@@ -7,6 +7,13 @@ import {getUser} from '../../graphql/queries';
 import AppContext from "../../utils/AppContext";
 const image =  require('../../../assets/images/Saly-16.png');
 
+const usdFormatter = new Intl.NumberFormat(
+  'en-US', {
+    style: 'currency',
+    currency: 'USD',
+    notation: 'compact',
+  })
+
 const ProfileScreen = () => {
   const [user, setUser] = useState(null)
   const { userId } = useContext(AppContext);
@@ -56,7 +63,7 @@ const ProfileScreen = () => {
           </View>
         </View>
         <View style={{alignItems: 'flex-end'}}>
-          <Text style={styles.value}>${user.networth}</Text>
+          <Text style={styles.value}>{usdFormatter.format(user.networth)}</Text>
         </View>
       </View>
 

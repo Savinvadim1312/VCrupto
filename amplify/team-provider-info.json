@@ -14,7 +14,7 @@
         "categories": {
             "auth": {
                 "vcrypto16d3e4c5": {
-                    "hostedUIProviderCreds": "[{\"ProviderName\":\"Google\",\"client_id\":\"851778055316-vfkk3itsq4s3cejhuc4sg51mogguntca.apps.googleusercontent.com\",\"client_secret\":\"lsNKsxcbgsWtqc4VfSATltuf\"}]",
+                    "hostedUIProviderCreds": "[{\"ProviderName\":\"Google\",\"client_id\":\"851778055316-vfkk3itsq4s3cejhuc4sg51mogguntca.apps.googleusercontent.com\",\"client_secret\":\"isIeWL4D_oy2PMB0w-lVLkqg\"}]",
                     "googleClientId": "851778055316-vfkk3itsq4s3cejhuc4sg51mogguntca.apps.googleusercontent.com"
                 }
             },

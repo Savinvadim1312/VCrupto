@@ -9,6 +9,18 @@ import CoinPriceGraph from "../../components/CoinPriceGraph";
 import {useNavigation, useRoute} from "@react-navigation/native";
 import AppContext from "../../utils/AppContext";
 
+const usdFormatter = new Intl.NumberFormat(
+'en-US', {
+  style: 'currency',
+  currency: 'USD',
+});
+
+const coinFormatter = new Intl.NumberFormat(
+'en-US', {
+  style: 'decimal',
+  notation: 'compact',
+});
+
 const CoinDetailsScreen = () => {
   const [coin, setCoin] = useState(null);
   const [portfolioCoin, setPortfolioCoin] = useState(null);
@@ -92,7 +104,7 @@ const CoinDetailsScreen = () => {
       <View style={styles.row}>
         <View style={styles.valueContainer}>
           <Text style={styles.label}>Current price</Text>
-          <Text style={styles.value}>{coin.currentPrice.toFixed(3)}</Text>
+          <Text style={styles.value}>{usdFormatter.format(coin.currentPrice)}</Text>
         </View>
 
         <View style={{flexDirection: 'row'}}>
@@ -119,9 +131,9 @@ const CoinDetailsScreen = () => {
       <View style={styles.row}>
         <Text>Position</Text>
         <Text>
-          {coin.symbol} {portfolioCoin?.amount?.toFixed(3) || 0}
+          {coin.symbol} {coinFormatter.format(portfolioCoin?.amount) || 0}
           {' '}
-          (${coin.currentPrice * (portfolioCoin?.amount?.toFixed(3) || 0)})
+          ({usdFormatter.format(coin.currentPrice * (portfolioCoin?.amount || 0))})
         </Text>
       </View>
 

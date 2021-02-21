@@ -9,14 +9,6 @@
 		},
 		"env": {
 			"Type": "String"
-		},
-		"apivcryptoGraphQLAPIIdOutput": {
-			"Type": "String",
-			"Default": "apivcryptoGraphQLAPIIdOutput"
-		},
-		"apivcryptoGraphQLAPIEndpointOutput": {
-			"Type": "String",
-			"Default": "apivcryptoGraphQLAPIEndpointOutput"
 		}
 	},
 	"Conditions": {
@@ -41,12 +33,12 @@
 				"FunctionName": {
 					"Fn::If": [
 						"ShouldNotCreateEnvResources",
-						"ExchangeCoins",
+						"NetWorthCalculator",
 						{
 							"Fn::Join": [
 								"",
 								[
-									"ExchangeCoins",
+									"NetWorthCalculator",
 									"-",
 									{
 										"Ref": "env"
@@ -63,12 +55,6 @@
 						},
 						"REGION": {
 							"Ref": "AWS::Region"
-						},
-						"API_VCRYPTO_GRAPHQLAPIIDOUTPUT": {
-							"Ref": "apivcryptoGraphQLAPIIdOutput"
-						},
-						"API_VCRYPTO_GRAPHQLAPIENDPOINTOUTPUT": {
-							"Ref": "apivcryptoGraphQLAPIEndpointOutput"
 						}
 					}
 				},
@@ -83,7 +69,7 @@
 				"Timeout": "25",
 				"Code": {
 					"S3Bucket": "amplify-vcrypto-dev-132939-deployment",
-					"S3Key": "amplify-builds/vcryptoe6806c17-58546b4d4f35776b2f7a-build.zip"
+					"S3Key": "amplify-builds/vcryptof289a4cd-4e3250682b64386a356b-build.zip"
 				}
 			}
 		},
@@ -93,12 +79,12 @@
 				"RoleName": {
 					"Fn::If": [
 						"ShouldNotCreateEnvResources",
-						"vcryptoLambdaRole4d2a4dcd",
+						"vcryptoLambdaRolef6aa8847",
 						{
 							"Fn::Join": [
 								"",
 								[
-									"vcryptoLambdaRole4d2a4dcd",
+									"vcryptoLambdaRolef6aa8847",
 									"-",
 									{
 										"Ref": "env"
@@ -164,59 +150,6 @@
 									}
 								]
 							}
-						}
-					]
-				}
-			}
-		},
-		"AmplifyResourcesPolicy": {
-			"DependsOn": [
-				"LambdaExecutionRole"
-			],
-			"Type": "AWS::IAM::Policy",
-			"Properties": {
-				"PolicyName": "amplify-lambda-execution-policy",
-				"Roles": [
-					{
-						"Ref": "LambdaExecutionRole"
-					}
-				],
-				"PolicyDocument": {
-					"Version": "2012-10-17",
-					"Statement": [
-						{
-							"Effect": "Allow",
-							"Action": [
-								"appsync:Create*",
-								"appsync:StartSchemaCreation",
-								"appsync:GraphQL",
-								"appsync:Get*",
-								"appsync:List*",
-								"appsync:Update*",
-								"appsync:Delete*"
-							],
-							"Resource": [
-								{
-									"Fn::Join": [
-										"",
-										[
-											"arn:aws:appsync:",
-											{
-												"Ref": "AWS::Region"
-											},
-											":",
-											{
-												"Ref": "AWS::AccountId"
-											},
-											":apis/",
-											{
-												"Ref": "apivcryptoGraphQLAPIIdOutput"
-											},
-											"/*"
-										]
-									]
-								}
-							]
 						}
 					]
 				}

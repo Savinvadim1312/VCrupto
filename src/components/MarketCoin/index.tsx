@@ -1,8 +1,14 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {View, Text, Image, Pressable} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 import styles from './styles'
 import PercentageChange from "../PercentageChange";
+
+const usdFormatter = new Intl.NumberFormat(
+  'en-US', {
+    style: 'currency',
+    currency: 'USD',
+  })
 
 export interface PortfolioCoinProps {
   marketCoin: {
@@ -39,8 +45,8 @@ const PortfolioCoin = (props: PortfolioCoinProps) => {
         </View>
       </View>
       <View style={{alignItems: 'flex-end'}}>
-        <Text style={styles.value}>${currentPrice.toFixed(3)}</Text>
-        <PercentageChange value={valueChange24H.toFixed(3)} />
+        <Text style={styles.value}>{usdFormatter.format(currentPrice)}</Text>
+        <PercentageChange value={valueChange24H} />
       </View>
     </Pressable>
   );

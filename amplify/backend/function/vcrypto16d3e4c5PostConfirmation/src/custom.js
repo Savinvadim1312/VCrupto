@@ -14,6 +14,7 @@ exports.handler = async (event, context) => {
   const Item = {
     'id': { S: event.request.userAttributes.sub },
     '__typename': { S: 'User' },
+    'type': { S: 'User' },
     'email': { S: event.request.userAttributes.email },
     'createdAt': { S: date.toISOString() },
     'updatedAt': { S: date.toISOString() },
@@ -40,7 +41,6 @@ exports.handler = async (event, context) => {
     console.log("Error", e);
   }
 
-  // TODO Give the user $100.000
   const PortfolionCoinItem = {
     'id': { S: `${event.request.userAttributes.sub}-usd` },
     '__typename': { S: 'PortfolioCoin' },
