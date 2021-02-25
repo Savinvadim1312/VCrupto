@@ -4,6 +4,7 @@
 
 export type ModelUserFilterInput = {
   id?: ModelIDInput | null,
+  type?: ModelStringInput | null,
   email?: ModelStringInput | null,
   name?: ModelStringInput | null,
   image?: ModelStringInput | null,
@@ -107,10 +108,27 @@ export type ModelCoinFilterInput = {
   not?: ModelCoinFilterInput | null,
 };
 
+export type ModelFloatKeyConditionInput = {
+  eq?: number | null,
+  le?: number | null,
+  lt?: number | null,
+  ge?: number | null,
+  gt?: number | null,
+  between?: Array< number | null > | null,
+};
+
+export enum ModelSortDirection {
+  ASC = "ASC",
+  DESC = "DESC",
+}
+
+
 export type ExchangeCoinsMutationVariables = {
   coinId: string,
   isBuy: boolean,
   amount: number,
+  usdPortfolioCoinId?: string | null,
+  coinPortfolioCoinId?: string | null,
 };
 
 export type ExchangeCoinsMutation = {
@@ -125,6 +143,7 @@ export type GetUserQuery = {
   getUser:  {
     __typename: "User",
     id: string,
+    type: string,
     email: string,
     name: string | null,
     image: string | null,
@@ -159,6 +178,7 @@ export type ListUsersQuery = {
     items:  Array< {
       __typename: "User",
       id: string,
+      type: string,
       email: string,
       name: string | null,
       image: string | null,
@@ -187,6 +207,7 @@ export type GetPortfolioCoinQuery = {
     user:  {
       __typename: "User",
       id: string,
+      type: string,
       email: string,
       name: string | null,
       image: string | null,
@@ -236,6 +257,7 @@ export type ListPortfolioCoinsQuery = {
       user:  {
         __typename: "User",
         id: string,
+        type: string,
         email: string,
         name: string | null,
         image: string | null,
@@ -309,6 +331,37 @@ export type ListCoinsQuery = {
       valueChange1D: number,
       valueChange7D: number,
       priceHistoryString: string | null,
+      createdAt: string,
+      updatedAt: string,
+    } | null > | null,
+    nextToken: string | null,
+  } | null,
+};
+
+export type GetUsersByNetworthQueryVariables = {
+  type?: string | null,
+  networth?: ModelFloatKeyConditionInput | null,
+  sortDirection?: ModelSortDirection | null,
+  filter?: ModelUserFilterInput | null,
+  limit?: number | null,
+  nextToken?: string | null,
+};
+
+export type GetUsersByNetworthQuery = {
+  getUsersByNetworth:  {
+    __typename: "ModelUserConnection",
+    items:  Array< {
+      __typename: "User",
+      id: string,
+      type: string,
+      email: string,
+      name: string | null,
+      image: string | null,
+      networth: number,
+      portfolioCoins:  {
+        __typename: "ModelPortfolioCoinConnection",
+        nextToken: string | null,
+      } | null,
       createdAt: string,
       updatedAt: string,
     } | null > | null,

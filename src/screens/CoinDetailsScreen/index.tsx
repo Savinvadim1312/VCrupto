@@ -129,7 +129,7 @@ const CoinDetailsScreen = () => {
       <View style={styles.row}>
         <Text>Position</Text>
         <Text>
-          {coin.symbol} {coinFormatter.format(portfolioCoin?.amount) || 0}
+          {coin.symbol} {coinFormatter.format(portfolioCoin?.amount|| 0)}
           {' '}
           ({usdFormatter.format(coin.currentPrice * (portfolioCoin?.amount || 0))})
         </Text>

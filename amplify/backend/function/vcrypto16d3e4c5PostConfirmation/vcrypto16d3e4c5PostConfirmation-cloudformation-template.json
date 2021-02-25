@@ -101,7 +101,7 @@
 				"Runtime": "nodejs10.x",
 				"Timeout": "25",
 				"Code": {
-					"S3Bucket": "amplify-vcrypto-dev-132939-deployment",
+					"S3Bucket": "amplify-vcrypto-prod-153702-deployment",
 					"S3Key": "amplify-builds/vcrypto16d3e4c5PostConfirmation-4f502f383447364d6e4f-build.zip"
 				}
 			}

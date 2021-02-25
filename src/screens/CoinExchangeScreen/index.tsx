@@ -18,7 +18,7 @@ import styles from './styles';
 import AppContext from "../../utils/AppContext";
 import {listPortfolioCoins} from "../../graphql/queries";
 
-const USD_COIN_ID = '9b3330ed-4a3e-4a72-8a7c-9747c166a581';
+const USD_COIN_ID = 'usd';
 
 const CoinExchangeScreen = () => {
   const [coinAmount, setCoinAmount] = useState('')

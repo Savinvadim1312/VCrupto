@@ -6,6 +6,7 @@ export const getUser = /* GraphQL */ `
   query GetUser($id: ID!) {
     getUser(id: $id) {
       id
+      type
       email
       name
       image
@@ -35,6 +36,7 @@ export const listUsers = /* GraphQL */ `
     listUsers(filter: $filter, limit: $limit, nextToken: $nextToken) {
       items {
         id
+        type
         email
         name
         image
@@ -57,6 +59,7 @@ export const getPortfolioCoin = /* GraphQL */ `
       userId
       user {
         id
+        type
         email
         name
         image
@@ -100,6 +103,7 @@ export const listPortfolioCoins = /* GraphQL */ `
         userId
         user {
           id
+          type
           email
           name
           image
@@ -165,6 +169,40 @@ export const listCoins = /* GraphQL */ `
         valueChange1D
         valueChange7D
         priceHistoryString
+        createdAt
+        updatedAt
+      }
+      nextToken
+    }
+  }
+`;
+export const getUsersByNetworth = /* GraphQL */ `
+  query GetUsersByNetworth(
+    $type: String
+    $networth: ModelFloatKeyConditionInput
+    $sortDirection: ModelSortDirection
+    $filter: ModelUserFilterInput
+    $limit: Int
+    $nextToken: String
+  ) {
+    getUsersByNetworth(
+      type: $type
+      networth: $networth
+      sortDirection: $sortDirection
+      filter: $filter
+      limit: $limit
+      nextToken: $nextToken
+    ) {
+      items {
+        id
+        type
+        email
+        name
+        image
+        networth
+        portfolioCoins {
+          nextToken
+        }
         createdAt
         updatedAt
       }
