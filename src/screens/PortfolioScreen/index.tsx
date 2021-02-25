@@ -1,10 +1,12 @@
 import React, {useContext, useEffect, useState} from 'react';
-import {View, Text, Image, FlatList} from 'react-native';
-import {API, graphql, graphqlOperation} from 'aws-amplify';
-import { getUserPortfolio } from './queries';
+import {FlatList, Image, Text, View} from 'react-native';
+import {API, graphqlOperation} from 'aws-amplify';
+import {useNavigation} from '@react-navigation/native';
+import {getUserPortfolio} from './queries';
 import styles from './styles';
 import PortfolioCoin from "../../components/PortfolioCoin";
 import AppContext from "../../utils/AppContext";
+
 const image =  require('../../../assets/images/Saly-10.png');
 
 const numberFormatter = new Intl.NumberFormat(
@@ -18,6 +20,8 @@ const PortfolioScreen = () => {
   const [portfolioCoins, setPortfolioCoins] = useState([]);
   const [loading, setLoading] = useState(false);
 
+  const navigation = useNavigation();
+
   const { userId } = useContext(AppContext);
 
   const fetchPortfolio = async () => {
@@ -29,7 +33,6 @@ const PortfolioScreen = () => {
           { id: userId },
         )
       )
-      console.log(response.data.getUser);
       setBalance(response.data.getUser.networth)
       setPortfolioCoins(response.data.getUser.portfolioCoins.items)
     } catch (e) {
@@ -42,6 +45,12 @@ const PortfolioScreen = () => {
   useEffect(() => {
     fetchPortfolio();
   }, [])
+
+  React.useEffect(() => {
+    return navigation.addListener('focus', () => {
+      fetchPortfolio();
+    });
+  }, [navigation]);
 
   return (
     <View style={styles.root}>

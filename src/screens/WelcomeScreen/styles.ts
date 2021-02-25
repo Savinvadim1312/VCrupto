@@ -22,13 +22,19 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     color: '#707070',
   },
-  googleButton: {
+  buttonContainer: {
     marginTop: 'auto',
-    marginBottom: 50,
-    width: '70%'
+    width: '100%',
+    alignItems: 'center',
+    marginBottom: 20
+  },
+  googleButton: {
+    width: '70%',
+    height: 70,
   },
   buttonImage: {
     width: '100%',
+    height: '100%',
     resizeMode: 'contain',
   }
 });

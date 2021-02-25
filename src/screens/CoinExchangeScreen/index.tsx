@@ -23,19 +23,42 @@ const USD_COIN_ID = '9b3330ed-4a3e-4a72-8a7c-9747c166a581';
 const CoinExchangeScreen = () => {
   const [coinAmount, setCoinAmount] = useState('')
   const [coinUSDValue, setCoinUSDValue] = useState('')
+  const [usdPortfolioCoin, setUsdPortfolioCoin] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
 
   const navigation = useNavigation();
 
   const { userId } = useContext(AppContext);
 
-  const maxUSD = 100000; // TODO fetch from api
-
   const route = useRoute();
 
   const isBuy = route?.params?.isBuy;
   const coin = route?.params?.coin;
   const portfolioCoin = route?.params?.portfolioCoin;
+
+  const getUSDPortfolioCoin = async () => {
+    try {
+      const response = await API.graphql(
+        graphqlOperation(listPortfolioCoins,
+          { filter: {
+              and: {
+                coinId: { eq: USD_COIN_ID },
+                userId: { eq: userId }
+              }
+            }}
+        )
+      )
+      if (response.data.listPortfolioCoins.items.length > 0) {
+        setUsdPortfolioCoin(response.data.listPortfolioCoins.items[0]);
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  useEffect(() => {
+    getUSDPortfolioCoin();
+  }, [])
 
   useEffect(() => {
     const amount = parseFloat(coinAmount)
@@ -57,31 +80,16 @@ const CoinExchangeScreen = () => {
     setCoinAmount((amount / coin?.currentPrice).toString());
   }, [coinUSDValue]);
 
-  const getPortfolioCoinId = async (coinId: string) => {
-    try {
-      const response = await API.graphql(
-        graphqlOperation(listPortfolioCoins,
-          { filter: {
-              and: {
-                coinId: { eq: coinId },
-                userId: { eq: userId }
-              }
-            }}
-        )
-      )
-      if (response.data.listPortfolioCoins.items.length > 0) {
-        return response.data.listPortfolioCoins.items[0].id;
-      } else {
-        return null;
-      }
-    } catch (e) {
-      console.error(e);
-      return null;
-    }
+  const onSellAll = () => {
+    setCoinAmount(portfolioCoin.amount);
+  }
+
+  const onBuyAll = () => {
+    setCoinUSDValue(usdPortfolioCoin?.amount || 0);
   }
 
   const placeOrder = async () => {
-    if (isLoading) {
+    if (isLoading || !usdPortfolioCoin) {
       return;
     }
     setIsLoading(true);
@@ -90,8 +98,8 @@ const CoinExchangeScreen = () => {
         coinId: coin.id,
         isBuy,
         amount: parseFloat(coinAmount),
-        usdPortfolioCoinId: await getPortfolioCoinId(USD_COIN_ID),
-        coinPortfolioCoinId: await getPortfolioCoinId(coin.id),
+        usdPortfolioCoinId: usdPortfolioCoin.id,
+        coinPortfolioCoinId: portfolioCoin.id,
       }
 
       const response = await API.graphql(
@@ -110,12 +118,13 @@ const CoinExchangeScreen = () => {
   }
 
   const onPlaceOrder = async () => {
-    if (isBuy && parseFloat(coinUSDValue) > maxUSD) {
-      Alert.alert('Error', `Not enough USD coins. Max: ${maxUSD}`);
+    const maxUsd = usdPortfolioCoin?.amount || 0;
+    if (isBuy && parseFloat(coinUSDValue) > maxUsd) {
+      Alert.alert('Error', `Not enough USD coins. Max: ${maxUsd}`);
       return;
     }
     if (!isBuy && (!portfolioCoin || parseFloat(coinAmount) > portfolioCoin.amount)) {
-      Alert.alert('Error', `Not enough ${coin.symbol} coins. Max: ${coin.amount || 0}`);
+      Alert.alert('Error', `Not enough ${coin.symbol} coins. Max: ${portfolioCoin.amount || 0}`);
       return;
     }
 
@@ -161,6 +170,16 @@ const CoinExchangeScreen = () => {
           <Text>USD</Text>
         </View>
       </View>
+
+      {isBuy ? (
+        <Pressable onPress={onBuyAll}>
+          <Text style={{color: '#0097ff'}}>Buy max</Text>
+        </Pressable>
+      ) : (
+        <Pressable onPress={onSellAll}>
+          <Text style={{color: '#0097ff'}}>Sell all</Text>
+        </Pressable>
+      )}
 
       <Pressable style={styles.button} onPress={onPlaceOrder}>
         <Text style={styles.buttonText}>Place Order</Text>
