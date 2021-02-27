@@ -37,7 +37,6 @@ const CoinExchangeScreen = () => {
   const portfolioCoin = route?.params?.portfolioCoin;
 
   const getUSDPortfolioCoin = async () => {
-    console.log('getUSDPortfolioCoin');
     try {
       const response = await API.graphql(
         graphqlOperation(listPortfolioCoins,
@@ -49,7 +48,6 @@ const CoinExchangeScreen = () => {
             }}
         )
       )
-      console.log(response);
       if (response.data.listPortfolioCoins.items.length > 0) {
         setUsdPortfolioCoin(response.data.listPortfolioCoins.items[0]);
       }
@@ -91,7 +89,7 @@ const CoinExchangeScreen = () => {
   }
 
   const placeOrder = async () => {
-    if (isLoading || !usdPortfolioCoin) {
+    if (isLoading) {
       return;
     }
     setIsLoading(true);
@@ -100,7 +98,7 @@ const CoinExchangeScreen = () => {
         coinId: coin.id,
         isBuy,
         amount: parseFloat(coinAmount),
-        usdPortfolioCoinId: usdPortfolioCoin.id,
+        usdPortfolioCoinId: usdPortfolioCoin?.id,
         coinPortfolioCoinId: portfolioCoin.id,
       }
 
@@ -120,11 +118,6 @@ const CoinExchangeScreen = () => {
   }
 
   const onPlaceOrder = async () => {
-    console.log('onPlaceOrder');
-    if (!usdPortfolioCoin) {
-      Alert.alert('Error', `Can't get your USD amount. Try again`);
-      return;
-    }
     const maxUsd = usdPortfolioCoin?.amount || 0;
     if (isBuy && parseFloat(coinUSDValue) > maxUsd) {
       Alert.alert('Error', `Not enough USD coins. Max: ${maxUsd}`);
