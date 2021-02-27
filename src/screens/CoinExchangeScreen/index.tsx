@@ -89,7 +89,7 @@ const CoinExchangeScreen = () => {
   }
 
   const placeOrder = async () => {
-    if (isLoading || !usdPortfolioCoin) {
+    if (isLoading) {
       return;
     }
     setIsLoading(true);
@@ -98,7 +98,7 @@ const CoinExchangeScreen = () => {
         coinId: coin.id,
         isBuy,
         amount: parseFloat(coinAmount),
-        usdPortfolioCoinId: usdPortfolioCoin.id,
+        usdPortfolioCoinId: usdPortfolioCoin?.id,
         coinPortfolioCoinId: portfolioCoin.id,
       }
 
@@ -135,7 +135,7 @@ const CoinExchangeScreen = () => {
     <KeyboardAvoidingView
       style={styles.root}
       behavior={Platform.OS === "ios" ? "padding" : "height"}
-      keyboardVerticalOffset={100}
+      keyboardVerticalOffset={80}
     >
       <Text style={styles.title}>
         {isBuy ? 'Buy ' : "Sell "}

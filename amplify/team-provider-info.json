@@ -19,7 +19,10 @@
                 }
             },
             "function": {
-                "vcrypto16d3e4c5PostConfirmation": {}
+                "vcrypto16d3e4c5PostConfirmation": {},
+                "vcryptoe6806c17": {},
+                "vcrypto5fce58ab": {},
+                "vcryptof289a4cd": {}
             }
         }
     },

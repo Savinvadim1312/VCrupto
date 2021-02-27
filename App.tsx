@@ -10,7 +10,17 @@ import useColorScheme from './src/hooks/useColorScheme';
 import Navigation from './src/navigation';
 import AppContext from './src/utils/AppContext';
 // @ts-ignore
-import awsconfig from './aws-exports'
+import awsConfig from './aws-exports'
+
+const [
+  productionRedirectSignIn,
+  localRedirectSignIn,
+] = awsConfig.oauth.redirectSignIn.split(",");
+
+const [
+  productionRedirectSignOut,
+  localRedirectSignOut,
+] = awsConfig.oauth.redirectSignOut.split(",");
 
 async function urlOpener(url: string, redirectUrl: string) {
   const { type, url: newUrl } = await WebBrowser.openAuthSessionAsync(
@@ -26,10 +36,12 @@ async function urlOpener(url: string, redirectUrl: string) {
 
 
 Amplify.configure({
-  ...awsconfig,
+  ...awsConfig,
   oauth: {
-    ...awsconfig.oauth,
+    ...awsConfig.oauth,
     urlOpener,
+    redirectSignIn: __DEV__ ? localRedirectSignIn : productionRedirectSignIn,
+    redirectSignOut: __DEV__ ? localRedirectSignOut : productionRedirectSignOut,
   },
 });
 
