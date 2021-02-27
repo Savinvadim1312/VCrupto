@@ -72,5 +72,5 @@
     "thirdPartyAuth": false,
     "userPoolGroups": false,
     "adminQueries": false,
-    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"vcrypto://\"],\"LogoutURLs\":[\"vcrypto://\"]}"
+    "oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"vcrypto://\",\"exp://127.0.0.1:19000/--/\"],\"LogoutURLs\":[\"vcrypto://\",\"exp://127.0.0.1:19000/--/\"]}"
 }

@@ -45,7 +45,8 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 50,
-    flexDirection: 'row'
+    flexDirection: 'row',
+    marginBottom: 20,
   },
   buttonText: {
     color: 'white',

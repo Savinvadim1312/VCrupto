@@ -68,7 +68,7 @@
 				"Layers": [],
 				"Timeout": "25",
 				"Code": {
-					"S3Bucket": "amplify-vcrypto-prod-153702-deployment",
+					"S3Bucket": "amplify-vcrypto-dev-132939-deployment",
 					"S3Key": "amplify-builds/vcryptof289a4cd-4e3250682b64386a356b-build.zip"
 				}
 			}
