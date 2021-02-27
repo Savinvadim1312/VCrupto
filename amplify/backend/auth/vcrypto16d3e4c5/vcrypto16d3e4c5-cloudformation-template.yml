@@ -137,9 +137,6 @@ Parameters:
   hostedUIProviderCreds:
     Type: String
               
-  googleClientId:
-    Type: String
-              
   oAuthMetadata:
     Type: String
                         
@@ -797,9 +794,6 @@ Outputs :
   AppClientSecret:
     Value: !GetAtt UserPoolClientInputs.appSecret
   
-  
-  GoogleWebClient:
-    Value: !Ref googleClientId
    
    
   

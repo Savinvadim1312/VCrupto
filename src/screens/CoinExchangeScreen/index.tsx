@@ -99,7 +99,7 @@ const CoinExchangeScreen = () => {
         isBuy,
         amount: parseFloat(coinAmount),
         usdPortfolioCoinId: usdPortfolioCoin?.id,
-        coinPortfolioCoinId: portfolioCoin.id,
+        coinPortfolioCoinId: portfolioCoin?.id,
       }
 
       const response = await API.graphql(
