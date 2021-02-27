@@ -20,7 +20,7 @@
     ],
     "ios": {
       "bundleIdentifier": "dev.notjust.vcrypto",
-      "buildNumber": "1.0.0",
+      "buildNumber": "1.0.1",
       "supportsTablet": true
     },
     "android": {
