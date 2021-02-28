@@ -8,18 +8,7 @@ import PercentageChange from "../../components/PercentageChange";
 import CoinPriceGraph from "../../components/CoinPriceGraph";
 import {useNavigation, useRoute} from "@react-navigation/native";
 import AppContext from "../../utils/AppContext";
-
-const usdFormatter = new Intl.NumberFormat(
-'en-US', {
-  style: 'currency',
-  currency: 'USD',
-});
-
-const coinFormatter = new Intl.NumberFormat(
-'en-US', {
-  style: 'decimal',
-  notation: 'compact',
-});
+import formatMoney from "../../utils/formatMoney";
 
 const CoinDetailsScreen = () => {
   const [coin, setCoin] = useState(null);
@@ -102,23 +91,23 @@ const CoinDetailsScreen = () => {
       <View style={styles.row}>
         <View style={styles.valueContainer}>
           <Text style={styles.label}>Current price</Text>
-          <Text style={styles.value}>{usdFormatter.format(coin.currentPrice)}</Text>
+          <Text style={styles.value}>${formatMoney(coin.currentPrice)}</Text>
         </View>
 
         <View style={{flexDirection: 'row'}}>
           <View style={styles.valueContainer}>
             <Text style={styles.label}>1 hour</Text>
-            <PercentageChange value={coin.valueChange24H.toFixed(3)} />
+            <PercentageChange value={coin.valueChange24H} />
           </View>
 
           <View style={styles.valueContainer}>
             <Text style={styles.label}>1 day</Text>
-            <PercentageChange value={coin.valueChange1D.toFixed(3)} />
+            <PercentageChange value={coin.valueChange1D} />
           </View>
 
           <View style={styles.valueContainer}>
             <Text style={styles.label}>7 days</Text>
-            <PercentageChange value={coin.valueChange7D.toFixed(3)} />
+            <PercentageChange value={coin.valueChange7D} />
           </View>
         </View>
       </View>
@@ -129,9 +118,9 @@ const CoinDetailsScreen = () => {
       <View style={styles.row}>
         <Text>Position</Text>
         <Text>
-          {coin.symbol} {coinFormatter.format(portfolioCoin?.amount|| 0)}
+          {coin.symbol} {formatMoney(portfolioCoin?.amount || 0)}
           {' '}
-          ({usdFormatter.format(coin.currentPrice * (portfolioCoin?.amount || 0))})
+          (${formatMoney(coin.currentPrice * (portfolioCoin?.amount || 0))})
         </Text>
       </View>
 

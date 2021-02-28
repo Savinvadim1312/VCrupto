@@ -33,6 +33,8 @@
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
-    }
+    },
+    "description": "Virtual Crypto Investment Platform",
+    "githubUrl": "https://github.com/Savinvadim1312/VCrupto"
   }
 }

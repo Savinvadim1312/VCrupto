@@ -6,14 +6,9 @@ import {getUserPortfolio} from './queries';
 import styles from './styles';
 import PortfolioCoin from "../../components/PortfolioCoin";
 import AppContext from "../../utils/AppContext";
+import formatMoney from "../../utils/formatMoney";
 
 const image =  require('../../../assets/images/Saly-10.png');
-
-const numberFormatter = new Intl.NumberFormat(
-'en-US', {
-  style: 'currency',
-  currency: 'USD',
-})
 
 const PortfolioScreen = () => {
   const [balance, setBalance] = useState(0);
@@ -67,7 +62,7 @@ const PortfolioScreen = () => {
             <Image style={styles.image} source={image} />
             <View style={styles.balanceContainer}>
               <Text style={styles.label}>Portfolio balance</Text>
-              <Text style={styles.balance}>{numberFormatter.format(balance)}</Text>
+              <Text style={styles.balance}>${formatMoney(balance)}</Text>
             </View>
           </>
         )}

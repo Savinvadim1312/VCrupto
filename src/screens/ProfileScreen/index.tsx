@@ -5,14 +5,8 @@ import {Auth, API, graphqlOperation} from "aws-amplify";
 import {CommonActions, useNavigation} from "@react-navigation/native";
 import {getUser} from '../../graphql/queries';
 import AppContext from "../../utils/AppContext";
+import formatMoney from "../../utils/formatMoney";
 const image =  require('../../../assets/images/Saly-16.png');
-
-const usdFormatter = new Intl.NumberFormat(
-  'en-US', {
-    style: 'currency',
-    currency: 'USD',
-    notation: 'compact',
-  })
 
 const ProfileScreen = () => {
   const [user, setUser] = useState(null)
@@ -55,15 +49,11 @@ const ProfileScreen = () => {
       <Image style={styles.image} source={image} />
 
       <View style={styles.userContainer}>
-        <View style={styles.left}>
-          <Image style={styles.userImage} source={{ uri: user.image}} />
-          <View>
-            <Text style={styles.name}>{user.name}</Text>
-            <Text style={styles.email}>{user.email}</Text>
-          </View>
-        </View>
-        <View style={{alignItems: 'flex-end'}}>
-          <Text style={styles.value}>{usdFormatter.format(user.networth)}</Text>
+        <Image style={styles.userImage} source={{ uri: user.image}} />
+        <View>
+          <Text style={styles.name}>{user.name}</Text>
+          <Text style={styles.email}>{user.email}</Text>
+          <Text style={styles.value}>${formatMoney(user.networth, 0)}</Text>
         </View>
       </View>
 

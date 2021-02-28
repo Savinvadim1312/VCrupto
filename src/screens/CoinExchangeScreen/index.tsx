@@ -17,6 +17,7 @@ const image =  require('../../../assets/images/Saly-31.png');
 import styles from './styles';
 import AppContext from "../../utils/AppContext";
 import {listPortfolioCoins} from "../../graphql/queries";
+import formatMoney from "../../utils/formatMoney";
 
 const USD_COIN_ID = 'usd';
 
@@ -144,7 +145,7 @@ const CoinExchangeScreen = () => {
       <Text style={styles.subtitle}>
         1 {coin?.symbol}
         {' = '}
-        ${coin?.currentPrice}
+        ${formatMoney(coin?.currentPrice)}
       </Text>
       <Image style={styles.image} source={image} />
 

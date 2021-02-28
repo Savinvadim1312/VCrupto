@@ -1,12 +1,7 @@
 import React from 'react';
 import {View, Text, Image} from 'react-native';
 import styles from './styles'
-
-const usdFormatter = new Intl.NumberFormat(
-  'en-US', {
-    style: 'currency',
-    currency: 'USD',
-  })
+import formatMoney from "../../utils/formatMoney";
 
 export interface UserRankingItemProps {
   user: {
@@ -36,7 +31,7 @@ const UserRankingItem = (props: UserRankingItemProps) => {
         </View>
       </View>
       <View style={{alignItems: 'flex-end'}}>
-        <Text style={styles.value}>{usdFormatter.format(networth)}</Text>
+        <Text style={styles.value}>${formatMoney(networth, 0)}</Text>
 
       </View>
     </View>
