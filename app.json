@@ -20,12 +20,12 @@
     ],
     "ios": {
       "bundleIdentifier": "dev.notjust.vcrypto",
-      "buildNumber": "1.0.2",
+      "buildNumber": "1.0.3",
       "supportsTablet": true
     },
     "android": {
       "package": "dev.notjust.vcrypto",
-      "versionCode": 2,
+      "versionCode": 3,
       "adaptiveIcon": {
         "foregroundImage": "./assets/images/adaptive-icon.png",
         "backgroundColor": "#2F68C1"

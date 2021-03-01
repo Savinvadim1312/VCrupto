@@ -77,7 +77,7 @@ const calculateUserNetWorth = async (user, coins) => {
 
     const netWorth = userCoins.reduce(sumUserCoins, 0)
 
-    updateUserNetWorth(user, netWorth);
+    return updateUserNetWorth(user, netWorth);
 }
 
 exports.handler = async () => {
